@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes 3 - Nuestro Tercer Mes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, 
+                #2c1810 0%, 
+                #4a2c2a 25%, 
+                #6b3e3e 50%, 
+                #8b4a4a 75%, 
+                #a55555 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo romántico con tonos cálidos */
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 30%, rgba(171, 85, 85, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(139, 74, 74, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(107, 62, 62, 0.4) 0%, transparent 70%);
+            z-index: -2;
+            animation: romanticPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes romanticPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+
+        /* Corazones flotantes */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(171, 85, 85, 0.6);
+            animation: floatHeart 8s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-80px) rotate(15deg) scale(1.2); opacity: 0.8; }
+        }
+
+        /* Luna romántica */
+        .moon {
+            position: fixed;
+            top: 10%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 25% 25%, #f8f2e8 0%, #e6d4c4 50%, #d4c0a8 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 80px rgba(248, 242, 232, 0.5);
+            animation: moonRomantic 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes moonRomantic {
+            0%, 100% { box-shadow: 0 0 80px rgba(248, 242, 232, 0.5); }
+            50% { box-shadow: 0 0 120px rgba(248, 242, 232, 0.7); }
+        }
+
+        /* Pétalos de rosa */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: #ab5555;
+            border-radius: 50% 0 50% 0;
+            animation: fallPetal 12s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes fallPetal {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        /* Imagen central romántica */
+        .image-container {
+            position: relative;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .floating-image {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ab5555, #8b4a4a);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(171, 85, 85, 0.4);
+            animation: romanticFloat 6s ease-in-out infinite;
+            border: 5px solid rgba(248, 242, 232, 0.3);
+            position: relative;
+        }
+
+        .floating-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: imageShimmer 10s linear infinite;
+        }
+
+        @keyframes imageShimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes romanticFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-35px) rotate(2deg); }
+        }
+
+        .floating-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Carta romántica */
+        .letter-container {
+            position: relative;
+            margin: 60px 0;
+            perspective: 1200px;
+        }
+
+        .letter-wrapper {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            cursor: pointer;
+            transition: all 0.8s ease;
+        }
+
+        .letter-front, .letter-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            transition: all 0.8s ease;
+        }
+
+        .letter-front {
+            background: linear-gradient(135deg, 
+                rgba(44, 24, 16, 0.95) 0%, 
+                rgba(74, 44, 42, 0.95) 50%, 
+                rgba(107, 62, 62, 0.95) 100%);
+            border: 3px solid rgba(171, 85, 85, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #f8f2e8;
+            backdrop-filter: blur(15px);
+        }
+
+        .letter-back {
+            background: linear-gradient(135deg, 
+                rgba(248, 242, 232, 0.98) 0%, 
+                rgba(240, 235, 225, 0.98) 100%);
+            border: 3px solid rgba(171, 85, 85, 0.5);
+            transform: rotateY(180deg);
+            padding: 45px;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+
+        .letter-wrapper.opened .letter-front {
+            transform: rotateY(-180deg);
+        }
+
+        .letter-wrapper.opened .letter-back {
+            transform: rotateY(0deg);
+        }
+
+        .envelope-seal {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #ab5555, #8b4a4a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 0 30px rgba(171, 85, 85, 0.6);
+            animation: sealBeat 2.5s ease-in-out infinite;
+        }
+
+        @keyframes sealBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .envelope-seal::before {
+            content: '💝';
+            font-size: 30px;
+            color: white;
+        }
+
+        .click-hint {
+            font-size: 1.3em;
+            color: #ab5555;
+            font-style: italic;
+            text-align: center;
+            opacity: 0.9;
+            animation: hintGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes hintGlow {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 0.5; }
+        }
+
+        .letter-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #ab5555, #2c1810);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .letter-subtitle {
+            font-size: 1.4em;
+            font-style: italic;
+            color: #8b4a4a;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .letter-content {
+            line-height: 2.2;
+            font-size: 1.15em;
+            color: #2c1810;
+            text-align: justify;
+        }
+
+        .letter-content p {
+            margin-bottom: 25px;
+        }
+
+        .letter-content strong {
+            color: #6b3e3e;
+            font-weight: bold;
+        }
+
+        .love-quote {
+            font-style: italic;
+            color: #ab5555;
+            text-align: center;
+            font-size: 1.3em;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(171, 85, 85, 0.08), rgba(139, 74, 74, 0.08));
+            border-radius: 15px;
+            border: 2px solid rgba(171, 85, 85, 0.2);
+            backdrop-filter: blur(10px);
+            animation: quotePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes quotePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .love-emphasis {
+            text-align: center;
+            font-size: 1.5em;
+            color: #8b4a4a;
+            font-weight: bold;
+            margin: 35px 0;
+            animation: loveGlow 3s ease-in-out infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes loveGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .letter-signature {
+            text-align: center;
+            font-style: italic;
+            color: #6b3e3e;
+            font-size: 1.5em;
+            margin-top: 45px;
+            padding-top: 30px;
+            border-top: 3px solid rgba(171, 85, 85, 0.4);
+        }
+
+        /* Botón de regreso elegante */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, rgba(107, 62, 62, 0.9), rgba(139, 74, 74, 0.9));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 35px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(248, 242, 232, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, rgba(139, 74, 74, 1), rgba(171, 85, 85, 1));
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Luces románticas */
+        .romantic-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .light {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(248, 242, 232, 0.8);
+            border-radius: 50%;
+            animation: twinkleLight 5s ease-in-out infinite;
+        }
+
+        @keyframes twinkleLight {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 20px;
+            }
+            
+            .floating-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .letter-wrapper {
+                height: 500px;
+            }
+            
+            .letter-back {
+                padding: 30px;
+            }
+            
+            .letter-title {
+                font-size: 2em;
+            }
+            
+            .moon {
+                width: 80px;
+                height: 80px;
+                top: 8%;
+                right: 10%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="romantic-bg"></div>
+    <div class="moon"></div>
+    <div class="hearts" id="hearts"></div>
+    <div class="petals" id="petals"></div>
+    <div class="romantic-lights" id="romanticLights"></div>
+
+    <button class="back-button" onclick="window.location.href='index.html'">← Volver</button>
+
+    <div class="container">
+        <div class="image-container">
+            <div class="floating-image" id="monthImage">
+                <span style="color: rgba(248,242,232,0.8); font-size: 14px;">mes3.jpg</span>
+            </div>
+        </div>
+
+        <div class="letter-container">
+            <div class="letter-wrapper" id="letterWrapper" onclick="toggleLetter()">
+                <div class="letter-front">
+                    <div class="envelope-seal"></div>
+                    <h1 style="font-size: 2.8em; color: #f8f2e8; margin-bottom: 15px;">Mes Tres</h1>
+                    <p style="font-size: 1.3em; color: #ab5555; margin-bottom: 25px;">Tres meses de amor infinito</p>
+                    <p class="click-hint">Haz clic para abrir mi corazón</p>
+                </div>
+                
+                <div class="letter-back">
+                    <div class="letter-title">Mes Tres</div>
+                    <div class="letter-subtitle">Tres meses de amor que se vuelve eterno</div>
+                    
+                    <div class="letter-content">
+                        <p><strong>HOY 3 MESES CONTIGO, MI NIÑA</strong></p>
+                        
+                        <p>Mes tras mes me voy dando cuenta de lo mucho que te amo, de lo importante que eres para mi vida y de todo lo que quiero lograr contigo, de lo importante que eres para mi y de lo mucho que quiero que seamos solo nosotros 2 contra el mundo, me encanta verte, me encanta estar contigo, te amo con mi alma.</p>
+                        
+                        <div class="love-quote">
+                            3 MESES CONTIGO NO ME BASTAN PARA DEMOSTRARTE LO QUE TE AMO
+                        </div>
+                        
+                        <p>Eres mi razón, eres mi mundo, eres mi niñita hermosa, mi princesita hermosa, tu mi amor, eres mi motor, espero durar siglos contigo y que con cada beso se sienta mi emoción como la de la primera salida, seamos solo dos gatitos naranjas enamorados, seamos algo más que humanos, seamos almas amándose.</p>
+                        
+                        <div class="love-emphasis">
+                            TE AMO.
+                        </div>
+                    </div>
+                    
+                    <div class="letter-signature">
+                        Con todo mi amor eterno 💕
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="mes3.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Crear corazones flotantes
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['♥', '💕', '❤️', '💖', '💝'];
+            
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Crear pétalos de rosa
+        function createPetals() {
+            const petalsContainer = document.getElementById('petals');
+            const petalColors = ['#ab5555', '#8b4a4a', '#6b3e3e', 'rgba(171, 85, 85, 0.8)'];
+            
+            for (let i = 0; i < 20; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 12 + 's';
+                petal.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                petal.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+                petalsContainer.appendChild(petal);
+            }
+        }
+
+        // Crear luces románticas
+        function createRomanticLights() {
+            const lightsContainer = document.getElementById('romanticLights');
+            for (let i = 0; i < 60; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                light.style.left = Math.random() * 100 + '%';
+                light.style.top = Math.random() * 100 + '%';
+                light.style.animationDelay = Math.random() * 5 + 's';
+                light.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                lightsContainer.appendChild(light);
+            }
+        }
+
+        // Función para alternar la carta
+        function toggleLetter() {
+            const letterWrapper = document.getElementById('letterWrapper');
+            letterWrapper.classList.toggle('opened');
+        }
+
+        // Cargar imagen
+        function loadImage() {
+            const img = new Image();
+            img.onload = function() {
+                const imageContainer = document.getElementById('monthImage');
+                imageContainer.style.backgroundImage = `url('mes3.jpg')`;
+                imageContainer.style.backgroundSize = 'cover';
+                imageContainer.style.backgroundPosition = 'center';
+                imageContainer.innerHTML = '';
+            };
+            img.src = 'mes3.jpg';
+        }
+
+        // Reproducir música
+        function playMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.volume = 0.3;
+            
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay bloqueado. Haz clic en cualquier lugar para reproducir la música.');
+                    document.addEventListener('click', function() {
+                        audio.play();
+                    }, { once: true });
+                });
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            createPetals();
+            createRomanticLights();
+            loadImage();
+            playMusic();
+        });
+    </script>
+</body>
+</html>
