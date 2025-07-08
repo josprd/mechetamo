@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aniversario</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Arial', sans-serif;
@@ -29,10 +25,7 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
@@ -93,12 +86,7 @@
             color: #f5f5f5;
             font-size: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
             overflow: hidden;
-        }
-
-        .photo-placeholder::after {
-            content: '';
         }
 
         .month-button {
@@ -138,119 +126,20 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        .message-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            padding: 20px;
-        }
-
-        .message-overlay.show {
-            opacity: 1;
-        }
-
-        .message-content {
-            background-color: rgba(45, 45, 45, 0.95);
-            color: #f5f5f5;
-            padding: 25px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 350px;
-            width: 100%;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        .message-overlay.show .message-content {
-            transform: scale(1);
-        }
-
-        /* Adaptaciones específicas para móvil */
+        /* Adaptaciones para móviles */
         @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 25px 15px;
-                max-width: 100%;
-                margin: 0 auto;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-                margin-bottom: 25px;
-            }
-            
-            .anniversary-grid {
-                gap: 20px;
-            }
-            
-            .month-card {
-                padding: 15px;
-            }
-            
-            .photo-placeholder {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .month-button {
-                padding: 10px 15px;
-                font-size: 13px;
-            }
-            
-            .message-content {
-                padding: 20px 25px;
-                font-size: 15px;
-            }
+            body { background-attachment: scroll; padding: 10px; }
+            .container { padding: 25px 15px; max-width: 100%; }
+            h1 { font-size: 1.8em; margin-bottom: 25px; }
+            .photo-placeholder { width: 100px; height: 100px; }
+            .month-button { padding: 10px 15px; font-size: 13px; }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            
-            .container {
-                padding: 20px 12px;
-            }
-            
-            h1 {
-                font-size: 1.6em;
-                margin-bottom: 20px;
-            }
-            
-            .anniversary-grid {
-                gap: 15px;
-            }
-            
-            .month-card {
-                padding: 12px;
-            }
-            
-            .photo-placeholder {
-                width: 90px;
-                height: 90px;
-            }
-            
-            .month-button {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
+            .container { padding: 20px 12px; }
+            h1 { font-size: 1.6em; margin-bottom: 20px; }
+            .photo-placeholder { width: 90px; height: 90px; }
+            .month-button { padding: 8px 12px; font-size: 12px; }
         }
     </style>
 </head>
@@ -258,131 +147,64 @@
     <div class="container">
         <div class="heart-decoration">♥</div>
         <h1>Aniversario</h1>
-        
+
         <div class="anniversary-grid">
             <div class="month-card">
                 <div class="photo-placeholder" id="photo1">
                     <span style="color: rgba(255,255,255,0.7);">mes1.jpg</span>
                 </div>
-                <button class="month-button" onclick="showMessage(1)">
+                <button class="month-button" onclick="navigateToMonth('mes1.html')">
                     Un mes, inicio de algo hermoso
                 </button>
             </div>
-            
+
             <div class="month-card">
                 <div class="photo-placeholder" id="photo2">
                     <span style="color: rgba(255,255,255,0.7);">mes2.jpg</span>
                 </div>
-                <button class="month-button" onclick="showMessage(2)">
+                <button class="month-button" onclick="navigateToMonth('mes2.html')">
                     Mes 2: mi amor, mi musa
                 </button>
             </div>
-            
+
             <div class="month-card">
                 <div class="photo-placeholder" id="photo3">
                     <span style="color: rgba(255,255,255,0.7);">mes3.jpg</span>
                 </div>
-                <button class="month-button" onclick="showMessage(3)">
+                <button class="month-button" onclick="navigateToMonth('mes3.html')">
                     Mes 3: cada día te amo más
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="message-overlay" id="messageOverlay">
-        <div class="message-content" id="messageContent">
-        </div>
-    </div>
-
     <script>
-        // Función para navegar a las páginas de meses
+        // Navegación a otra página
         function navigateToMonth(page) {
-            try {
-                window.location.href = page;
-            } catch (error) {
-                console.error('Error al navegar:', error);
-                // Fallback: mostrar mensaje si hay error
-                showErrorMessage('No se pudo cargar la página. Verifica que el archivo ' + page + ' existe.');
-            }
+            window.location.href = page;
         }
 
-        // Función para mostrar mensajes de error
-        function showErrorMessage(message) {
-            const overlay = document.getElementById('messageOverlay');
-            const content = document.getElementById('messageContent');
-            
-            content.textContent = message;
-            overlay.classList.add('show');
-            
-            setTimeout(() => {
-                overlay.classList.remove('show');
-            }, 4000);
-        }
-
-        // Función para mostrar mensaje (por si quieres usarla)
-        function showMessage(month) {
-            const messages = {
-                1: "Un mes, inicio de algo hermoso ♥",
-                2: "Mes 2: mi amor, mi musa ♥",
-                3: "Mes 3: cada día te amo más ♥"
-            };
-            
-            const overlay = document.getElementById('messageOverlay');
-            const content = document.getElementById('messageContent');
-            
-            content.textContent = messages[month];
-            overlay.classList.add('show');
-            
-            setTimeout(() => {
-                overlay.classList.remove('show');
-            }, 3000);
-        }
-
-        // Cerrar mensaje al hacer clic fuera
-        document.getElementById('messageOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('show');
-            }
-        });
-
-        // Función para cargar imágenes reales
+        // Cargar imágenes
         function loadImage(photoId, imagePath) {
             const img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 const photoDiv = document.getElementById(photoId);
                 photoDiv.style.backgroundImage = `url('${imagePath}')`;
                 photoDiv.style.backgroundSize = 'cover';
                 photoDiv.style.backgroundPosition = 'center';
                 photoDiv.innerHTML = '';
             };
-            img.onerror = function() {
+            img.onerror = function () {
                 console.log('No se pudo cargar la imagen: ' + imagePath);
             };
             img.src = imagePath;
         }
 
-        // Intentar cargar las imágenes automáticamente
-        document.addEventListener('DOMContentLoaded', function() {
+        // Al cargar la página
+        document.addEventListener('DOMContentLoaded', function () {
             loadImage('photo1', 'mes1.jpg');
             loadImage('photo2', 'mes2.jpg');
             loadImage('photo3', 'mes3.jpg');
-        });
-
-        // Verificar si los archivos existen (opcional)
-        document.addEventListener('DOMContentLoaded', function() {
-            const files = ['mes1.html', 'mes2.html', 'mes3.html'];
-            
-            files.forEach(file => {
-                fetch(file, {method: 'HEAD'})
-                    .then(response => {
-                        if (!response.ok) {
-                            console.warn(`Archivo ${file} no encontrado o no accesible`);
-                        }
-                    })
-                    .catch(error => {
-                        console.warn(`Error al verificar ${file}:`, error);
-                    });
-            });
         });
     </script>
 </body>
