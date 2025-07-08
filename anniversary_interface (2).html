@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniversario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://wallpapers.com/images/hd/4k-love-3840-x-2160-wallpaper-pvx2decdvvpjmm6d.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .container {
+            background-color: rgba(45, 45, 45, 0.2);
+            border-radius: 8px;
+            padding: 30px 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #f5f5f5;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .anniversary-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .month-card {
+            background-color: rgba(58, 58, 58, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(3px);
+        }
+
+        .month-card:hover {
+            background-color: rgba(64, 64, 64, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(139, 79, 92, 0.4);
+            border-radius: 6px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f5f5f5;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::after {
+            content: '';
+        }
+
+        .month-button {
+            background-color: rgba(107, 44, 58, 0.4);
+            color: #f5f5f5;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            line-height: 1.4;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(3px);
+        }
+
+        .month-button:hover {
+            background-color: rgba(125, 52, 68, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .month-button:active {
+            transform: translateY(0);
+            background-color: rgba(90, 37, 48, 0.6);
+        }
+
+        .heart-decoration {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 18px;
+            color: rgba(212, 165, 171, 0.8);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .message-overlay.show {
+            opacity: 1;
+        }
+
+        .message-content {
+            background-color: rgba(45, 45, 45, 0.95);
+            color: #f5f5f5;
+            padding: 25px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 350px;
+            width: 100%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .message-overlay.show .message-content {
+            transform: scale(1);
+        }
+
+        /* Adaptaciones específicas para móvil */
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 25px 15px;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+            }
+            
+            .anniversary-grid {
+                gap: 20px;
+            }
+            
+            .month-card {
+                padding: 15px;
+            }
+            
+            .photo-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .month-button {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+            
+            .message-content {
+                padding: 20px 25px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 20px 12px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+                margin-bottom: 20px;
+            }
+            
+            .anniversary-grid {
+                gap: 15px;
+            }
+            
+            .month-card {
+                padding: 12px;
+            }
+            
+            .photo-placeholder {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .month-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart-decoration">♥</div>
+        <h1>Aniversario</h1>
+        
+        <div class="anniversary-grid">
+            <div class="month-card">
+                <div class="photo-placeholder" id="photo1">
+                    <span style="color: rgba(255,255,255,0.7);">mes1.jpg</span>
+                </div>
+                <button class="month-button" onclick="showMessage(1)">
+                    Un mes, inicio de algo hermoso
+                </button>
+            </div>
+            
+            <div class="month-card">
+                <div class="photo-placeholder" id="photo2">
+                    <span style="color: rgba(255,255,255,0.7);">mes2.jpg</span>
+                </div>
+                <button class="month-button" onclick="showMessage(2)">
+                    Mes 2: mi amor, mi musa
+                </button>
+            </div>
+            
+            <div class="month-card">
+                <div class="photo-placeholder" id="photo3">
+                    <span style="color: rgba(255,255,255,0.7);">mes3.jpg</span>
+                </div>
+                <button class="month-button" onclick="showMessage(3)">
+                    Mes 3: cada día te amo más
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-overlay" id="messageOverlay">
+        <div class="message-content" id="messageContent">
+        </div>
+    </div>
+
+    <script>
+        function showMessage(month) {
+            const messages = {
+                1: "Un mes, inicio de algo hermoso ♥",
+                2: "Mes 2: mi amor, mi musa ♥",
+                3: "Mes 3: cada día te amo más ♥"
+            };
+            
+            const overlay = document.getElementById('messageOverlay');
+            const content = document.getElementById('messageContent');
+            
+            content.textContent = messages[month];
+            overlay.classList.add('show');
+            
+            // Remover el mensaje después de 3 segundos
+            setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 3000);
+        }
+
+        // Cerrar mensaje al hacer clic fuera
+        document.getElementById('messageOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+
+        // Función para cargar imágenes reales
+        function loadImage(photoId, imagePath) {
+            const img = new Image();
+            img.onload = function() {
+                const photoDiv = document.getElementById(photoId);
+                photoDiv.style.backgroundImage = `url('${imagePath}')`;
+                photoDiv.style.backgroundSize = 'cover';
+                photoDiv.style.backgroundPosition = 'center';
+                photoDiv.innerHTML = '';
+            };
+            img.src = imagePath;
+        }
+
+        // Intentar cargar las imágenes automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadImage('photo1', 'mes1.jpg');
+            loadImage('photo2', 'mes2.jpg');
+            loadImage('photo3', 'mes3.jpg');
+        });
+    </script>
+</body>
+</html>
