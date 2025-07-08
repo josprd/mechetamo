@@ -264,7 +264,7 @@
                 <div class="photo-placeholder" id="photo1">
                     <span style="color: rgba(255,255,255,0.7);">mes1.jpg</span>
                 </div>
-                <button class="month-button" onclick="window.location.href='mes1.html'">
+                <button class="month-button" onclick="navigateToMonth('mes1.html')">
                     Un mes, inicio de algo hermoso
                 </button>
             </div>
@@ -273,7 +273,7 @@
                 <div class="photo-placeholder" id="photo2">
                     <span style="color: rgba(255,255,255,0.7);">mes2.jpg</span>
                 </div>
-                <button class="month-button" onclick="window.location.href='mes2.html'">
+                <button class="month-button" onclick="navigateToMonth('mes2.html')">
                     Mes 2: mi amor, mi musa
                 </button>
             </div>
@@ -282,7 +282,7 @@
                 <div class="photo-placeholder" id="photo3">
                     <span style="color: rgba(255,255,255,0.7);">mes3.jpg</span>
                 </div>
-                <button class="month-button" onclick="showMessage(3)">
+                <button class="month-button" onclick="navigateToMonth('mes3.html')">
                     Mes 3: cada día te amo más
                 </button>
             </div>
@@ -295,6 +295,31 @@
     </div>
 
     <script>
+        // Función para navegar a las páginas de meses
+        function navigateToMonth(page) {
+            try {
+                window.location.href = page;
+            } catch (error) {
+                console.error('Error al navegar:', error);
+                // Fallback: mostrar mensaje si hay error
+                showErrorMessage('No se pudo cargar la página. Verifica que el archivo ' + page + ' existe.');
+            }
+        }
+
+        // Función para mostrar mensajes de error
+        function showErrorMessage(message) {
+            const overlay = document.getElementById('messageOverlay');
+            const content = document.getElementById('messageContent');
+            
+            content.textContent = message;
+            overlay.classList.add('show');
+            
+            setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 4000);
+        }
+
+        // Función para mostrar mensaje (por si quieres usarla)
         function showMessage(month) {
             const messages = {
                 1: "Un mes, inicio de algo hermoso ♥",
@@ -308,7 +333,6 @@
             content.textContent = messages[month];
             overlay.classList.add('show');
             
-            // Remover el mensaje después de 3 segundos
             setTimeout(() => {
                 overlay.classList.remove('show');
             }, 3000);
@@ -331,6 +355,9 @@
                 photoDiv.style.backgroundPosition = 'center';
                 photoDiv.innerHTML = '';
             };
+            img.onerror = function() {
+                console.log('No se pudo cargar la imagen: ' + imagePath);
+            };
             img.src = imagePath;
         }
 
@@ -339,6 +366,23 @@
             loadImage('photo1', 'mes1.jpg');
             loadImage('photo2', 'mes2.jpg');
             loadImage('photo3', 'mes3.jpg');
+        });
+
+        // Verificar si los archivos existen (opcional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const files = ['mes1.html', 'mes2.html', 'mes3.html'];
+            
+            files.forEach(file => {
+                fetch(file, {method: 'HEAD'})
+                    .then(response => {
+                        if (!response.ok) {
+                            console.warn(`Archivo ${file} no encontrado o no accesible`);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(`Error al verificar ${file}:`, error);
+                    });
+            });
         });
     </script>
 </body>
