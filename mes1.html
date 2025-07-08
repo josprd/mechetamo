@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes 1 - Nuestro Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo de galaxia animado */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 0, 150, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(0, 100, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 30%, rgba(255, 100, 0, 0.2) 0%, transparent 50%);
+            z-index: -2;
+            animation: galaxyPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes galaxyPulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Estrellas */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            padding: 30px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        /* Imagen central flotante */
+        .image-container {
+            position: relative;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .floating-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #8b4f5c, #6b2c3a);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: float 4s ease-in-out infinite;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Carta interactiva */
+        .letter-container {
+            position: relative;
+            margin: 40px 0;
+            perspective: 1000px;
+        }
+
+        .letter {
+            background: rgba(245, 245, 245, 0.95);
+            color: #2d2d2d;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border: 2px solid rgba(139, 79, 92, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(-45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .letter:hover::before {
+            opacity: 1;
+            animation: shine 1s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(-45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(-45deg); }
+        }
+
+        .letter:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #6b2c3a;
+        }
+
+        .letter-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .letter-subtitle {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #8b4f5c;
+        }
+
+        .letter-content {
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .letter-signature {
+            text-align: center;
+            font-style: italic;
+            color: #6b2c3a;
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(139, 79, 92, 0.3);
+        }
+
+        /* Botón de regreso */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(107, 44, 58, 0.8);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-button:hover {
+            background: rgba(125, 52, 68, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Partículas flotantes */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float-particle 6s ease-in-out infinite;
+        }
+
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .floating-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .letter {
+                padding: 20px;
+            }
+            
+            .letter-content {
+                font-size: 1em;
+            }
+            
+            .letter-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-bg"></div>
+    <div class="stars" id="stars"></div>
+    <div class="particles" id="particles"></div>
+
+    <button class="back-button" onclick="window.location.href='index.html'">← Volver</button>
+
+    <div class="container">
+        <div class="image-container">
+            <div class="floating-image" id="monthImage">
+                <span style="color: rgba(255,255,255,0.7); font-size: 14px;">mes1.jpg</span>
+            </div>
+        </div>
+
+        <div class="letter-container">
+            <div class="letter" onclick="toggleLetter()">
+                <div class="letter-header">
+                    <h1 class="letter-title">Mes Uno</h1>
+                    <p class="letter-subtitle">Una historia claramente en inicio</p>
+                </div>
+                
+                <div class="letter-content">
+                    <p>Mes uno, una historia claramente en inicio, el amarte, el conocerte y el saber que quiero todo contigo, el pensar que quiero todo contigo, el que tu eres mi niña hermosa, el decirte que quiero estar contigo y el sobre todo, <strong>YA TE TENGO; YA SOMOS NOVIOS.</strong></p>
+                    
+                    <p>Solo fijate en lo que me he convertido, ¿Se te hace poco escribir mucho y que tu seas el motivo?...</p>
+                    
+                    <p>Pero el sentir que tanto tiempo estuve buscando sin querer a alguien como tu, y con buscarte me refiero a tantos escritos sin musa, a mis textos al aire, es decir, yo sabia que eras tú, sin embargo dios te puso en mi camino, por eso mismo puedo decir que <strong>te amo</strong>.</p>
+                    
+                    <p>Un mes lleno de amor, un mes lleno de impulsos de escribirte, se que te puedo hacer bien, te escribi algo nuevo, eyyyy, el mejor de mi vida, recorriendo tu mente y amandote, un millon de expresiones a mi musa infinita, <strong>TÚ MERCEDES, MI NIÑA HERMOSA</strong>.</p>
+                </div>
+                
+                <div class="letter-signature">
+                    Con todo mi amor ♥
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="mes1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Crear estrellas
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Crear partículas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Función para alternar la carta
+        function toggleLetter() {
+            const letter = document.querySelector('.letter');
+            letter.style.transform = letter.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        }
+
+        // Cargar imagen
+        function loadImage() {
+            const img = new Image();
+            img.onload = function() {
+                const imageContainer = document.getElementById('monthImage');
+                imageContainer.style.backgroundImage = `url('mes1.jpg')`;
+                imageContainer.style.backgroundSize = 'cover';
+                imageContainer.style.backgroundPosition = 'center';
+                imageContainer.innerHTML = '';
+            };
+            img.src = 'mes1.jpg';
+        }
+
+        // Reproducir música automáticamente
+        function playMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.volume = 0.5;
+            
+            // Intentar reproducir automáticamente
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay bloqueado. Haz clic en cualquier lugar para reproducir la música.');
+                    // Reproducir después del primer clic del usuario
+                    document.addEventListener('click', function() {
+                        audio.play();
+                    }, { once: true });
+                });
+            }
+        }
+
+        // Inicializar todo
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            createParticles();
+            loadImage();
+            playMusic();
+        });
+    </script>
+</body>
+</html>
